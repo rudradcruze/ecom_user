@@ -1,23 +1,24 @@
-import 'package:ecom_user/pages/register_page.dart';
-import 'package:ecom_user/theme/theme.dart';
+import 'package:ecom_user/pages/login_page.dart';
 import 'package:ecom_user/widgets/custom_scaffold_background_widget.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 
-class LoginPage extends StatefulWidget {
-  static const String routeName = '/login';
+import '../theme/theme.dart';
 
-  const LoginPage({super.key});
+class RegistrationPage extends StatefulWidget {
+  static const String routeName = '/register';
+
+  const RegistrationPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegistrationPage> createState() => _RegistrationPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegistrationPageState extends State<RegistrationPage> {
   final formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final nameController = TextEditingController();
   bool isObscure = true;
   String errMsg = '';
 
@@ -33,9 +34,9 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
           Expanded(
-            flex: 7,
+            flex: 10,
             child: Container(
-              padding: const EdgeInsets.fromLTRB(25.0, 50.0, 25.0, 20.0),
+              padding: const EdgeInsets.fromLTRB(25.0, 30.0, 25.0, 20.0),
               decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
@@ -49,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        'Welcome Back!',
+                        'Get Started',
                         style: TextStyle(
                           fontSize: 30.0,
                           fontWeight: FontWeight.w900,
@@ -57,7 +58,36 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                       const SizedBox(
-                        height: 40,
+                        height: 30,
+                      ),
+                      TextFormField(
+                        controller: nameController,
+                        keyboardType: TextInputType.name,
+                        decoration: InputDecoration(
+                          labelText: 'Name',
+                          prefixIcon: const Icon(Icons.person),
+                          border: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                              color: Colors.black12,
+                            ),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                              color: Colors.black12,
+                            ),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter Email';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(
+                        height: 30,
                       ),
                       TextFormField(
                         controller: emailController,
@@ -86,7 +116,7 @@ class _LoginPageState extends State<LoginPage> {
                         },
                       ),
                       const SizedBox(
-                        height: 40,
+                        height: 30,
                       ),
                       TextFormField(
                         obscureText: isObscure,
@@ -126,13 +156,13 @@ class _LoginPageState extends State<LoginPage> {
                         },
                       ),
                       const SizedBox(
-                        height: 40,
+                        height: 30,
                       ),
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
-                          onPressed: _loginAdmin,
-                          child: const Text('Sign in'),
+                          onPressed: () {}, // TODO: Implement Registration
+                          child: const Text('Sign Up'),
                         ),
                       ),
                       const SizedBox(
@@ -160,7 +190,7 @@ class _LoginPageState extends State<LoginPage> {
                             padding: EdgeInsets.symmetric(
                                 vertical: 0, horizontal: 10.0),
                             child: Text(
-                              'Sign up',
+                              'Sign In',
                               style: TextStyle(
                                 color: Colors.black45,
                               ),
@@ -175,13 +205,13 @@ class _LoginPageState extends State<LoginPage> {
                         ],
                       ),
                       SizedBox(
-                        height: errMsg.isNotEmpty ? 20 : 40,
+                        height: errMsg.isNotEmpty ? 20 : 30,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const Text(
-                            'Don\'t have an account? ',
+                            'Already have an account? ',
                             style: TextStyle(
                               color: Colors.black45,
                             ),
@@ -189,10 +219,10 @@ class _LoginPageState extends State<LoginPage> {
                           GestureDetector(
                             onTap: () {
                               Navigator.pushNamed(
-                                  context, RegistrationPage.routeName);
+                                  context, LoginPage.routeName);
                             },
                             child: Text(
-                              'Sign Up',
+                              'Sign In',
                               style: TextStyle(
                                 color: lightColorScheme.primary,
                               ),
@@ -215,25 +245,9 @@ class _LoginPageState extends State<LoginPage> {
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
+    nameController.dispose();
     super.dispose();
   }
 
-  void _loginAdmin() async {
-    if (formKey.currentState!.validate()) {
-      final email = emailController.text;
-      final password = passwordController.text;
-      EasyLoading.show(status: 'Please wait...');
 
-      try {} on FirebaseAuthException catch (error) {
-        EasyLoading.dismiss();
-        setState(() {
-          if (error.code == 'invalid-credential') {
-            errMsg = 'Invalid email and password';
-          } else {
-            errMsg = error.message!;
-          }
-        });
-      }
-    }
-  }
 }

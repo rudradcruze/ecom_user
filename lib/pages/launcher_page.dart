@@ -1,8 +1,9 @@
+import 'package:ecom_user/pages/login_page.dart';
 import 'package:ecom_user/pages/view_product_page.dart';
+import 'package:ecom_user/pages/welcome_page.dart';
 import 'package:flutter/material.dart';
 
 import '../auth/auth_service.dart';
-import 'login_page.dart';
 
 class LauncherPage extends StatefulWidget {
   static const String routeName = '/';
@@ -20,7 +21,7 @@ class _LauncherPageState extends State<LauncherPage> {
       if (AuthService.currentUser != null) {
         Navigator.pushReplacementNamed(context, ViewProductPage.routeName);
       } else {
-        Navigator.pushReplacementNamed(context, LoginPage.routeName);
+        Navigator.pushReplacementNamed(context, WelcomePage.routeName);
       }
     });
     super.initState();
