@@ -1,7 +1,11 @@
+import 'package:ecom_user/auth/auth_service.dart';
+import 'package:ecom_user/pages/launcher_page.dart';
 import 'package:ecom_user/pages/login_page.dart';
 import 'package:ecom_user/widgets/custom_scaffold_background_widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import '../theme/theme.dart';
 
@@ -81,7 +85,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter Email';
+                            return 'Please enter Name';
                           }
                           return null;
                         },
@@ -161,7 +165,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
-                          onPressed: () {}, // TODO: Implement Registration
+                          onPressed: _registrationUser,
                           child: const Text('Sign Up'),
                         ),
                       ),
@@ -247,6 +251,25 @@ class _RegistrationPageState extends State<RegistrationPage> {
     passwordController.dispose();
     nameController.dispose();
     super.dispose();
+  }
+
+  void _registrationUser() async {
+    if (formKey.currentState!.validate()) {
+      final email = emailController.text;
+      final password = passwordController.text;
+      final name = nameController.text;
+      EasyLoading.show(status: 'Please wait...');
+      try {
+        await AuthService.registerUser(email, password, name);
+        EasyLoading.dismiss();
+        Navigator.pushReplacementNamed(context, LauncherPage.routeName);
+      } on FirebaseAuthException catch (error) {
+        EasyLoading.dismiss();
+        setState(() {
+          errMsg = 'Something went wrong!';
+        });
+      }
+    }
   }
 
 

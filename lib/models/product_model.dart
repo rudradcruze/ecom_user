@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../utils/converters.dart';
 import 'category_model.dart';
 
 part 'product_model.freezed.dart';

@@ -1,3 +1,5 @@
+import 'package:ecom_user/auth/auth_service.dart';
+import 'package:ecom_user/pages/launcher_page.dart';
 import 'package:ecom_user/pages/register_page.dart';
 import 'package:ecom_user/theme/theme.dart';
 import 'package:ecom_user/widgets/custom_scaffold_background_widget.dart';
@@ -131,7 +133,7 @@ class _LoginPageState extends State<LoginPage> {
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
-                          onPressed: _loginAdmin,
+                          onPressed: _loginUser,
                           child: const Text('Sign in'),
                         ),
                       ),
@@ -218,13 +220,16 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  void _loginAdmin() async {
+  void _loginUser() async {
     if (formKey.currentState!.validate()) {
       final email = emailController.text;
       final password = passwordController.text;
       EasyLoading.show(status: 'Please wait...');
-
-      try {} on FirebaseAuthException catch (error) {
+      try {
+          await AuthService.loginUser(email, password);
+          EasyLoading.dismiss();
+          Navigator.pushReplacementNamed(context, LauncherPage.routeName);
+      } on FirebaseAuthException catch (error) {
         EasyLoading.dismiss();
         setState(() {
           if (error.code == 'invalid-credential') {
