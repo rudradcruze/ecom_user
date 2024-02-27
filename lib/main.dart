@@ -36,6 +36,8 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: lightMode,
+      darkTheme: darkMode,
+      themeMode: ThemeMode.system,
       builder: EasyLoading.init(),
       initialRoute: LauncherPage.routeName,
       routes: {

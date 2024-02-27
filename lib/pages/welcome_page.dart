@@ -1,7 +1,7 @@
 import 'package:ecom_user/pages/login_page.dart';
 import 'package:ecom_user/pages/register_page.dart';
 import 'package:ecom_user/theme/theme.dart';
-import 'package:ecom_user/widgets/custom_scaffold_background_widget.dart';
+import 'package:ecom_user/widgets/scaffold_background_widget.dart';
 import 'package:ecom_user/widgets/welcome_button.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +12,7 @@ class WelcomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomBackgroundScaffold(
+    return BackgroundScaffold(
       child: Column(
         children: [
           Flexible(

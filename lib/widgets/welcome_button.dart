@@ -13,7 +13,7 @@ class WelcomeButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, routeName);
+        Navigator.pushReplacementNamed(context, routeName);
       },
       child: Container(
         padding: const EdgeInsets.all(30.0),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class CustomBackgroundScaffold extends StatelessWidget {
-  const CustomBackgroundScaffold({super.key, required this.child});
+class BackgroundScaffold extends StatelessWidget {
+  const BackgroundScaffold({super.key, required this.child});
   final Widget child;
 
   @override

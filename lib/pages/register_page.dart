@@ -1,7 +1,7 @@
 import 'package:ecom_user/auth/auth_service.dart';
 import 'package:ecom_user/pages/launcher_page.dart';
 import 'package:ecom_user/pages/login_page.dart';
-import 'package:ecom_user/widgets/custom_scaffold_background_widget.dart';
+import 'package:ecom_user/widgets/scaffold_background_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +28,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomBackgroundScaffold(
+    return BackgroundScaffold(
       child: Column(
         children: [
           const Expanded(

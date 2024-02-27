@@ -4,6 +4,7 @@ const lightColorScheme = ColorScheme(
   brightness: Brightness.light,
   primary: Color(0xFF416FDF),
   onPrimary: Color(0xFFFFFFFF),
+  tertiary: Color(0xFF48D983),
   secondary: Color(0xFF6EAEE7),
   onSecondary: Color(0xFFFFFFFF),
   error: Color(0xFFBA1A1A),
@@ -20,6 +21,7 @@ const darkColorScheme = ColorScheme(
   brightness: Brightness.dark,
   primary: Color(0xFF416FDF),
   onPrimary: Color(0xFFFFFFFF),
+  tertiary: Color(0xFF48D983),
   secondary: Color(0xFF6EAEE7),
   onSecondary: Color(0xFFFFFFFF),
   error: Color(0xFFBA1A1A),
@@ -31,6 +33,14 @@ const darkColorScheme = ColorScheme(
   surface: Color(0xFFF9FAF3),
   onSurface: Color(0xFF1A1C18),
 );
+
+bool isDark(BuildContext context) {
+  if (ThemeMode.system == 'light') {
+    return false;
+  } else {
+    return true;
+  }
+}
 
 ThemeData lightMode = ThemeData(
   useMaterial3: true,
