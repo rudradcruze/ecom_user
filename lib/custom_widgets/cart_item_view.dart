@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecom_user/models/cart_model.dart';
 import 'package:ecom_user/utils/constants.dart';
+import 'package:ecom_user/utils/widget_function.dart';
 import 'package:flutter/material.dart';
 
 class CartItemView extends StatelessWidget {
@@ -65,6 +66,7 @@ class CartItemView extends StatelessWidget {
                 IconButton(
                   onPressed: () {
                     onDelete(cartModel.productId);
+                    showMsg(context, '${cartModel.productName} is successfully removed');
                   },
                   icon: const Icon(Icons.cancel, color: Colors.red,),
                 ),

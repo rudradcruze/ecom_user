@@ -1,4 +1,5 @@
 import 'package:ecom_user/custom_widgets/cart_item_view.dart';
+import 'package:ecom_user/pages/checkout_page.dart';
 import 'package:ecom_user/pages/view_product_page.dart';
 import 'package:ecom_user/providers/cart_provider.dart';
 import 'package:ecom_user/theme/theme.dart';
@@ -60,11 +61,10 @@ class _CartPageState extends State<CartPage> {
                     ),
                     OutlinedButton(
                       style: OutlinedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        primary: lightColorScheme.primary,
-                        side: BorderSide(color: Colors.transparent),
+                        foregroundColor: lightColorScheme.primary, backgroundColor: Colors.white,
+                        side: const BorderSide(color: Colors.transparent),
                       ),
-                      onPressed: () {},
+                      onPressed: () => Navigator.pushNamed(context, CheckoutPage.routeName),
                       child: const Text('Checkout'),
                     ),
                   ],
