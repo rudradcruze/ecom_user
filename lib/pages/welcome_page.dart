@@ -1,8 +1,8 @@
 import 'package:ecom_user/pages/login_page.dart';
 import 'package:ecom_user/pages/register_page.dart';
 import 'package:ecom_user/theme/theme.dart';
-import 'package:ecom_user/widgets/scaffold_background_widget.dart';
-import 'package:ecom_user/widgets/welcome_button.dart';
+import 'package:ecom_user/custom_widgets/scaffold_background_widget.dart';
+import 'package:ecom_user/custom_widgets/welcome_button.dart';
 import 'package:flutter/material.dart';
 
 class WelcomePage extends StatelessWidget {

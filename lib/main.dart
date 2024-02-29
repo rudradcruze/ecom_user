@@ -1,3 +1,4 @@
+import 'package:ecom_user/pages/cart_page.dart';
 import 'package:ecom_user/pages/launcher_page.dart';
 import 'package:ecom_user/pages/login_page.dart';
 import 'package:ecom_user/pages/register_page.dart';
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
         WelcomePage.routeName: (context) => const WelcomePage(),
         ViewProductPage.routeName: (context) => const ViewProductPage(),
         RegistrationPage.routeName: (context) => const RegistrationPage(),
+        CartPage.routeName: (context) => const CartPage(),
       },
     );
   }

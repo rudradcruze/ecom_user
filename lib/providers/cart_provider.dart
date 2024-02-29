@@ -40,7 +40,34 @@ class CartProvider extends ChangeNotifier {
       notifyListeners();
     });
   }
+
+  num priceWithQuantity(CartModel cartModel) => (cartModel.price * cartModel.quantity);
+
+  bool get isCartEmpty => cartList.isEmpty;
+
+  Future<void> increaseQuantity(CartModel cartModel) {
+    num increasedQuantity = cartModel.quantity + 1;
+    return _db.updateCartQuantity(AuthService.uid, cartModel.productId, increasedQuantity);
+  }
+
+  Future<void>? decreaseQuantity(CartModel cartModel) {
+    if (cartModel.quantity > 1) {
+      num decreasedQuantity = cartModel.quantity - 1;
+      return _db.updateCartQuantity(AuthService.uid, cartModel.productId, decreasedQuantity);
+    }
+    return null;
+  }
+
+  num get getCartSubTotal {
+    num total = 0;
+    for (final cart in cartList) {
+      total += priceWithQuantity(cart);
+    }
+    return total;
+  }
+
 }
+
 
 extension on ProductModel {
   num get priceAfterDiscount => price - ((price * discount) / 100);

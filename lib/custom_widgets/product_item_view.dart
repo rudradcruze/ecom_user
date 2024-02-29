@@ -1,6 +1,7 @@
 import 'package:ecom_user/models/product_model.dart';
 import 'package:ecom_user/providers/cart_provider.dart';
 import 'package:ecom_user/theme/theme.dart';
+import 'package:ecom_user/utils/constants.dart';
 import 'package:ecom_user/utils/widget_function.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -138,7 +139,7 @@ class ProductItemView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     if (product!.discount == 0) Text(
-                      '৳${product!.priceAfterDiscount}',
+                      '$currencySymbol${product!.priceAfterDiscount}',
                       style: const TextStyle(
                         fontSize: 20.0,
                         fontWeight: FontWeight.bold,
@@ -148,7 +149,7 @@ class ProductItemView extends StatelessWidget {
                     ),
                     if (product!.discount > 0) RichText(
                       text: TextSpan(
-                          text: '৳${product!.price}',
+                          text: '$currencySymbol${product!.price}',
                           style: const TextStyle(
                             fontSize: 12.0,
                             fontWeight: FontWeight.bold,

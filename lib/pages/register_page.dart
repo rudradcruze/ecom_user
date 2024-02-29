@@ -1,7 +1,7 @@
 import 'package:ecom_user/auth/auth_service.dart';
 import 'package:ecom_user/pages/launcher_page.dart';
 import 'package:ecom_user/pages/login_page.dart';
-import 'package:ecom_user/widgets/scaffold_background_widget.dart';
+import 'package:ecom_user/custom_widgets/scaffold_background_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

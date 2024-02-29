@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecom_user/models/app_user_model.dart';
 import 'package:ecom_user/models/cart_model.dart';
@@ -42,4 +40,12 @@ class DbHelper {
         .doc(uid)
         .collection(collectionCart)
         .snapshots();
+
+  Future<void> updateCartQuantity(String uid, String pid, num quantity) {
+    return _db.collection(collectionUser)
+        .doc(uid)
+        .collection(collectionCart)
+        .doc(pid)
+        .update({'quantity': quantity});
+  }
 }

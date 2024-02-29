@@ -1,5 +1,6 @@
+import 'package:ecom_user/pages/cart_page.dart';
 import 'package:ecom_user/providers/cart_provider.dart';
-import 'package:ecom_user/widgets/product_item_view.dart';
+import 'package:ecom_user/custom_widgets/product_item_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,6 +20,12 @@ class ViewProductPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('All Product'),
+        actions: [
+          IconButton(
+            onPressed: () => Navigator.pushNamed(context, CartPage.routeName),
+            icon: const Icon(Icons.shopping_cart),
+          ),
+        ],
       ),
       body: Consumer<ProductProvider>(
         builder: (context, provider, child) => GridView.builder(
@@ -28,7 +35,7 @@ class ViewProductPage extends StatelessWidget {
             mainAxisSpacing: 10,
             mainAxisExtent: 250.0,
           ),
-          padding: EdgeInsets.symmetric(horizontal: 15.0),
+          padding: const EdgeInsets.symmetric(horizontal: 15.0),
           itemCount: provider.productList.length,
           itemBuilder: (context, index) {
             final product = provider.productList[index];

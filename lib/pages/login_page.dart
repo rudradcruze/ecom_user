@@ -2,7 +2,7 @@ import 'package:ecom_user/auth/auth_service.dart';
 import 'package:ecom_user/pages/launcher_page.dart';
 import 'package:ecom_user/pages/register_page.dart';
 import 'package:ecom_user/theme/theme.dart';
-import 'package:ecom_user/widgets/scaffold_background_widget.dart';
+import 'package:ecom_user/custom_widgets/scaffold_background_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
