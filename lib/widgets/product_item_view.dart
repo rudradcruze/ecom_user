@@ -1,11 +1,15 @@
 import 'package:ecom_user/models/product_model.dart';
+import 'package:ecom_user/providers/cart_provider.dart';
 import 'package:ecom_user/theme/theme.dart';
+import 'package:ecom_user/utils/widget_function.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:provider/provider.dart';
 
-class ProductCard extends StatelessWidget {
-  const ProductCard({super.key, required this.product});
+class ProductItemView extends StatelessWidget {
+  const ProductItemView({super.key, required this.product});
 
   final ProductModel? product;
 
@@ -88,7 +92,10 @@ class ProductCard extends StatelessWidget {
                   children: [
                     Text(
                       product!.productName,
-                      style: Theme.of(context).textTheme.titleMedium,
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .titleMedium,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
                     ),
@@ -112,7 +119,8 @@ class ProductCard extends StatelessWidget {
                       direction: Axis.horizontal,
                       allowHalfRating: true,
                       itemCount: 5,
-                      itemBuilder: (context, _) => const Icon(
+                      itemBuilder: (context, _) =>
+                      const Icon(
                         Icons.star,
                         color: Colors.amber,
                       ),
@@ -140,37 +148,59 @@ class ProductCard extends StatelessWidget {
                     ),
                     if (product!.discount > 0) RichText(
                       text: TextSpan(
-                        text: '৳${product!.price}',
+                          text: '৳${product!.price}',
                           style: const TextStyle(
                             fontSize: 12.0,
                             fontWeight: FontWeight.bold,
                             color: Colors.grey,
                             decoration: TextDecoration.lineThrough,
                           ),
-                        children: [
-                          TextSpan(
-                            text: '৳${product!.priceAfterDiscount}',
-                            style: const TextStyle(
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                              decoration: TextDecoration.none,
+                          children: [
+                            TextSpan(
+                              text: '৳${product!.priceAfterDiscount}',
+                              style: const TextStyle(
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                                decoration: TextDecoration.none,
+                              ),
                             ),
-                          ),
-                        ]
+                          ]
                       ),
                     ),
-                    Container(
-                      padding: const EdgeInsets.all(3.0),
-                      decoration: BoxDecoration(
-                          color: lightColorScheme.primary,
-                          borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(5.0),
-                              bottomRight: Radius.circular(16.0))),
-                      child: const Icon(
-                        Icons.add,
-                        color: Colors.white,
-                      ),
+                    Consumer<CartProvider>(
+                      builder: (context, provider, child) {
+                        final isInCart = provider.isInCart(product!.productId!);
+                        return GestureDetector(
+                          onTap: () {
+                            if (isInCart) {
+                              EasyLoading.show(status: 'Please wait...');
+                              provider.removeFromCart(product!.productId!);
+                              showMsg(context, '${product!.productName} is successfully removed from cart');
+                              EasyLoading.dismiss();
+                            } else {
+                              EasyLoading.show(status: 'Please wait...');
+                              provider.addToCart(product!);
+                              showMsg(context, '${product!.productName} is successfully added into cart');
+                              EasyLoading.dismiss();
+                            }
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                                color: isInCart ? lightColorScheme.secondary : lightColorScheme.primary,
+                                borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(5.0),
+                                    bottomRight: Radius.circular(16.0))),
+                            child: Icon(
+                              isInCart
+                                  ? Icons.remove_shopping_cart
+                                  : Icons.add,
+                              color: Colors.white,
+                            ),
+                          ),
+                        );
+                      },
                     )
                   ],
                 )

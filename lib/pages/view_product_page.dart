@@ -1,4 +1,5 @@
-import 'package:ecom_user/widgets/product_card.dart';
+import 'package:ecom_user/providers/cart_provider.dart';
+import 'package:ecom_user/widgets/product_item_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -13,6 +14,7 @@ class ViewProductPage extends StatelessWidget {
   Widget build(BuildContext context) {
     Provider.of<ProductProvider>(context, listen: false).getAllCategories();
     Provider.of<ProductProvider>(context, listen: false).getAllProducts();
+    Provider.of<CartProvider>(context, listen: false).getAllCartItem();
 
     return Scaffold(
       appBar: AppBar(
@@ -30,7 +32,7 @@ class ViewProductPage extends StatelessWidget {
           itemCount: provider.productList.length,
           itemBuilder: (context, index) {
             final product = provider.productList[index];
-            return ProductCard(product: product);
+            return ProductItemView(product: product);
           },
         ),
       ),

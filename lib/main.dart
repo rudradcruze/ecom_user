@@ -3,6 +3,7 @@ import 'package:ecom_user/pages/login_page.dart';
 import 'package:ecom_user/pages/register_page.dart';
 import 'package:ecom_user/pages/view_product_page.dart';
 import 'package:ecom_user/pages/welcome_page.dart';
+import 'package:ecom_user/providers/cart_provider.dart';
 import 'package:ecom_user/providers/product_provider.dart';
 import 'package:ecom_user/theme/theme.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -21,6 +22,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => ProductProvider()),
+        ChangeNotifierProvider(create: (context) => CartProvider()),
       ],
       child: const MyApp(),
     ),
