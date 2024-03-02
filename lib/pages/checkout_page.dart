@@ -1,4 +1,5 @@
 import 'package:ecom_user/providers/cart_provider.dart';
+import 'package:ecom_user/providers/order_provider.dart';
 import 'package:ecom_user/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +11,7 @@ class CheckoutPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<OrderProvider>(context, listen: false).getOrderConstant();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Checkout'),
@@ -17,7 +19,7 @@ class CheckoutPage extends StatelessWidget {
       body: ListView(
         children: [
           buildItemSection(),
-          buildOrderSummerySection(),
+          buildOrderSummerySection(context, Provider.of<CartProvider>(context, listen: false).getCartSubTotal),
         ],
       ),
     );
@@ -53,7 +55,8 @@ class CheckoutPage extends StatelessWidget {
         );
   }
 
-  Widget buildOrderSummerySection() {
+  Widget buildOrderSummerySection(context, num subtotal) {
+    var provider = Provider.of<OrderProvider>(context);
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -73,7 +76,7 @@ class CheckoutPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text('Subtotal', style: TextStyle(fontSize: 16.0),),
-                  const Text('$currencySymbol 323432', style: TextStyle(fontSize: 16.0),),
+                  Text('$currencySymbol$subtotal', style: const TextStyle(fontSize: 16.0),),
                 ],
               ),
             ),
@@ -83,7 +86,7 @@ class CheckoutPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text('Delivery Charge', style: TextStyle(fontSize: 16.0),),
-                  const Text('$currencySymbol 100', style: TextStyle(fontSize: 16.0),),
+                  Text('$currencySymbol${provider.orderConstantModel.deliveryCharge}', style: const TextStyle(fontSize: 16.0),),
                 ],
               ),
             ),
@@ -92,8 +95,8 @@ class CheckoutPage extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text('Discount(0%)', style: TextStyle(fontSize: 16.0),),
-                  const Text('-$currencySymbol 0', style: TextStyle(fontSize: 16.0),),
+                  Text('Discount(${provider.orderConstantModel.discount}%)', style: const TextStyle(fontSize: 16.0),),
+                  Text('-$currencySymbol${provider.getDiscountAmount(subtotal)}', style: const TextStyle(fontSize: 16.0),),
                 ],
               ),
             ),
@@ -102,8 +105,8 @@ class CheckoutPage extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text('VAT(0%)', style: TextStyle(fontSize: 16.0),),
-                  const Text('-$currencySymbol 560', style: TextStyle(fontSize: 16.0),),
+                  Text('VAT(${provider.orderConstantModel.vat}%)', style: const TextStyle(fontSize: 16.0),),
+                  Text('+$currencySymbol${provider.getVatAmount(subtotal)}', style: const TextStyle(fontSize: 16.0),),
                 ],
               ),
             ),
@@ -117,7 +120,7 @@ class CheckoutPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text('Grand Total', style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),),
-                  const Text('$currencySymbol 56430', style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),),
+                  Text('$currencySymbol${provider.getGrantTotal(subtotal)}', style: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),),
                 ],
               ),
             ),

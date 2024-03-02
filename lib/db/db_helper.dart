@@ -9,6 +9,8 @@ class DbHelper {
   final String collectionProduct = 'Products';
   final String collectionUser = 'Users';
   final String collectionCart = 'Cart';
+  final String collectionSettings = 'Settings';
+  final String documentOrderConstants = 'OrderConstants';
 
   Future<void> addNewUser(AppUserModel appUserModel) {
     return _db.collection(collectionUser).doc(appUserModel.uid).set(appUserModel.toJson());
@@ -34,6 +36,9 @@ class DbHelper {
 
   Stream<QuerySnapshot<Map<String, dynamic>>> getAllProducts() =>
       _db.collection(collectionProduct).snapshots();
+
+  Stream<DocumentSnapshot<Map<String, dynamic>>> getOrderConstants() =>
+      _db.collection(collectionSettings).doc(documentOrderConstants).snapshots();
 
   Stream<QuerySnapshot<Map<String, dynamic>>> getAllCartItem(String uid) =>
       _db.collection(collectionUser)
