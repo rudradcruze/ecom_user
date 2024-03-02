@@ -1,6 +1,7 @@
 import 'package:ecom_user/pages/cart_page.dart';
 import 'package:ecom_user/providers/cart_provider.dart';
 import 'package:ecom_user/custom_widgets/product_item_view.dart';
+import 'package:ecom_user/providers/order_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,6 +17,7 @@ class ViewProductPage extends StatelessWidget {
     Provider.of<ProductProvider>(context, listen: false).getAllCategories();
     Provider.of<ProductProvider>(context, listen: false).getAllProducts();
     Provider.of<CartProvider>(context, listen: false).getAllCartItem();
+    Provider.of<OrderProvider>(context, listen: false).getOrderConstant();
 
     return Scaffold(
       appBar: AppBar(

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecom_user/models/app_user_model.dart';
 import 'package:ecom_user/models/cart_model.dart';
+import 'package:ecom_user/models/order_model.dart';
 
 class DbHelper {
   final _db = FirebaseFirestore.instance;
@@ -9,6 +10,7 @@ class DbHelper {
   final String collectionProduct = 'Products';
   final String collectionUser = 'Users';
   final String collectionCart = 'Cart';
+  final String collectionOrder = 'Order';
   final String collectionSettings = 'Settings';
   final String documentOrderConstants = 'OrderConstants';
 
@@ -52,5 +54,33 @@ class DbHelper {
         .collection(collectionCart)
         .doc(pid)
         .update({'quantity': quantity});
+  }
+
+  Future<void> clearCart(String uid) async {
+    final wb = _db.batch();
+    var snapshot = await _db.collection(collectionUser).doc(uid)
+        .collection(collectionCart).get();
+    for (final doc in snapshot.docs) {
+      final docId = doc.data()['productId'];
+      final cartDoc = _db.collection(collectionUser).doc().collection(collectionCart).doc(docId);
+      wb.delete(cartDoc);
+    }
+    return wb.commit();
+  }
+
+  Future<void> saveOrder(OrderModel orderModel) async {
+    final wb = _db.batch();
+    final orderDoc = _db.collection(collectionOrder).doc(orderModel.orderId);
+    wb.set(orderDoc, orderModel.toJson());
+
+    for (final map in orderModel.orderDetails) {
+      final productSnapshot = await _db.collection(collectionProduct).doc(map['productId']).get();
+      final prevStock = productSnapshot.data()!['stock'];
+      final newStock = prevStock - map['quantity'];
+      final proDoc = _db.collection(collectionProduct).doc(map['productId']);
+      wb.update(proDoc, {'stock' : newStock});
+    }
+
+    return wb.commit();
   }
 }

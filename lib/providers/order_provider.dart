@@ -1,10 +1,15 @@
 import 'package:ecom_user/db/db_helper.dart';
 import 'package:ecom_user/models/order_constant_model.dart';
+import 'package:ecom_user/models/order_model.dart';
 import 'package:flutter/foundation.dart';
 
 class OrderProvider extends ChangeNotifier {
   OrderConstantModel orderConstantModel = OrderConstantModel();
   final _db = DbHelper();
+
+  Future<void> saveOrder(OrderModel orderModel) {
+    return _db.saveOrder(orderModel);
+  }
 
   getOrderConstant() {
     _db.getOrderConstants().listen((snapshot) {

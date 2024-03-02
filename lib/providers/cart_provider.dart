@@ -33,6 +33,10 @@ class CartProvider extends ChangeNotifier {
     return _db.removeFromCart(pid, AuthService.uid);
   }
 
+  Future<void> clearCart() {
+    return _db.clearCart(AuthService.uid);
+  }
+
   void getAllCartItem() {
     _db.getAllCartItem(AuthService.uid).listen((snapshot) {
       cartList = List.generate(snapshot.docs.length,
