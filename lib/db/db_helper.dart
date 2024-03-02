@@ -62,7 +62,7 @@ class DbHelper {
         .collection(collectionCart).get();
     for (final doc in snapshot.docs) {
       final docId = doc.data()['productId'];
-      final cartDoc = _db.collection(collectionUser).doc().collection(collectionCart).doc(docId);
+      final cartDoc = _db.collection(collectionUser).doc(uid).collection(collectionCart).doc(docId);
       wb.delete(cartDoc);
     }
     return wb.commit();
