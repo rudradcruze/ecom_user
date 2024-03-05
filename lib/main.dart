@@ -11,7 +11,6 @@ import 'package:ecom_user/providers/order_provider.dart';
 import 'package:ecom_user/providers/product_provider.dart';
 import 'package:ecom_user/theme/theme.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
@@ -23,9 +22,6 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  FirebaseMessaging.instance.subscribeToTopic("Weather");
-  FirebaseMessaging.instance.subscribeToTopic("News");
-  FirebaseMessaging.instance.subscribeToTopic("Friend Request");
   runApp(
     MultiProvider(
       providers: [
