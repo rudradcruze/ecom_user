@@ -245,6 +245,7 @@ class CheckoutPage extends StatelessWidget {
     final orderModel = OrderModel(
       orderId: generateOrderId(),
       uid: AuthService.uid,
+      streetAddress: address,
       orderDate: Timestamp.fromDate(DateTime.now()),
       deliveryCharge: orderProvider.orderConstantModel.deliveryCharge,
       discount: orderProvider.orderConstantModel.discount,

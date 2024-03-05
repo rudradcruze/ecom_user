@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ecom_user/models/cart_model.dart';
 import 'package:ecom_user/utils/converters.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -17,6 +16,7 @@ class OrderModel with _$OrderModel {
     required num vat,
     required num grantTotal,
     required String orderStatus,
+    required String streetAddress,
     required List<Map<String, dynamic>> orderDetails,
 }) = _OrderModel;
 
