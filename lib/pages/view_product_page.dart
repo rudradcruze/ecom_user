@@ -1,4 +1,6 @@
+import 'package:ecom_user/auth/auth_service.dart';
 import 'package:ecom_user/pages/cart_page.dart';
+import 'package:ecom_user/pages/launcher_page.dart';
 import 'package:ecom_user/providers/cart_provider.dart';
 import 'package:ecom_user/custom_widgets/product_item_view.dart';
 import 'package:ecom_user/providers/order_provider.dart';
@@ -26,6 +28,14 @@ class ViewProductPage extends StatelessWidget {
           IconButton(
             onPressed: () => Navigator.pushNamed(context, CartPage.routeName),
             icon: const Icon(Icons.shopping_cart),
+          ),
+          IconButton(
+            onPressed: () {
+              AuthService.logout().then((value) =>
+                  Navigator.pushReplacementNamed(
+                      context, LauncherPage.routeName));
+            },
+            icon: const Icon(Icons.logout),
           ),
         ],
       ),
